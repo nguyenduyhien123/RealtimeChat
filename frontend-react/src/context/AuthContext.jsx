@@ -4,6 +4,7 @@ import { baseUrl, postRequest } from "../utils/services";
 export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // Đăng ký
   const [registerError, setRegisterError] = useState(null);
   const [isRegisterLoading, setIsRegisterLoading] = useState(false);
   const [registerInfo, setRegisterInfo] = useState({
@@ -11,7 +12,15 @@ export const AuthContextProvider = ({ children }) => {
     email: "",
     password: "",
   });
+  // Đăng nhập
+  const [loginError, setLoginError] = useState(null);
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
   console.log("user", user);
+  console.log("Login", loginInfo);
   useEffect(() => {
     const user = localStorage.getItem("User");
     setUser(JSON.parse(user));
@@ -19,6 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   const updateRegisterInfo = useCallback((info) => {
     setRegisterInfo(info);
   }, []);
+  // Xử lý đăng ký
   const registerUser = useCallback(
     async (e) => {
       e.preventDefault();
@@ -37,6 +47,29 @@ export const AuthContextProvider = ({ children }) => {
     },
     [registerInfo]
   );
+  // Xử lý đăng nhập
+  const updateLoginInfo = useCallback((info) => {
+    setLoginInfo(info);
+  }, []);
+  const loginUser = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setIsLoginLoading(true);
+      setLoginError(null);
+      const response = await postRequest(
+        `${baseUrl}/users/login`,
+        JSON.stringify(loginInfo)
+      );
+      setIsLoginLoading(false);
+      if (response.error) {
+        return setLoginError(response);
+      }
+      localStorage.setItem("User", JSON.stringify(response));
+      setUser(response);
+    },
+    [loginInfo]
+  );
+
   const logoutUser = useCallback(() => {
     localStorage.removeItem("User");
     setUser(null);
@@ -51,6 +84,11 @@ export const AuthContextProvider = ({ children }) => {
         registerError,
         isRegisterLoading,
         logoutUser,
+        loginError,
+        loginInfo,
+        loginUser,
+        isLoginLoading,
+        updateLoginInfo,
       }}
     >
       {children}
