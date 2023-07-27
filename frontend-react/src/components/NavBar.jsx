@@ -11,7 +11,9 @@ const NavBar = () => {
           <Link to="/">Chat App</Link>
         </h2>
         {user && (
-          <span className="text-warning">Logged in as {user?.name}</span>
+          <span className="text-warning">
+            Hello <span className="fw-bolder fs-4">{user?.name}</span>
+          </span>
         )}
         <Nav>
           <Stack direction="horizontal" gap={3}>
