@@ -54,6 +54,17 @@ const ChatBox = () => {
           onChange={setTextMessage}
           fontFamily="Roboto"
           borderColor="rgba(72, 112, 223, 0.2)"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              console.log(textMessage);
+              sendTextMessage(
+                textMessage,
+                user,
+                currentChat._id,
+                setTextMessage
+              );
+            }
+          }}
         />
         <button
           className="send-btn"
