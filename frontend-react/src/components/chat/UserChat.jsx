@@ -1,7 +1,7 @@
 import { Stack } from "react-bootstrap";
 import { useFetchRecipientUser } from "../../hooks/useFetchRecipient";
 import avatar from "../../assets/avatar.svg";
-const UserChats = ({ chat, user }) => {
+const UserChat = ({ chat, user }) => {
   const { recipientUser } = useFetchRecipientUser(chat, user);
   console.log(recipientUser);
   return (
@@ -16,7 +16,7 @@ const UserChats = ({ chat, user }) => {
           <img src={avatar} height="35px"></img>
         </div>
         <div className="text-content">
-          <div className="name"></div>
+          <div className="name">{recipientUser?.name}</div>
           <div className="text">Text Message</div>
         </div>
       </div>
@@ -28,4 +28,4 @@ const UserChats = ({ chat, user }) => {
     </Stack>
   );
 };
-export default UserChats;
+export default UserChat;
