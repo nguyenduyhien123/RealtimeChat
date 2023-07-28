@@ -51,7 +51,9 @@ const ChatBox = () => {
                 }
                 ref={scroll}
               >
-                <span>{message.text}</span>
+                <span style={{ maxWidth: "90%", wordWrap: "break-word" }}>
+                  {message.text}
+                </span>
                 <span className="message-footer">
                   {moment(message.createdAt).calendar()}
                 </span>
