@@ -65,6 +65,8 @@ body {
 
 .messages-box {
   height: 85vh;
+  min-width: 300px;
+  max-width: 20%;
 }
 
 /* Chat Header */
